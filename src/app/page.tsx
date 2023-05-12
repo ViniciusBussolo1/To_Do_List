@@ -1,8 +1,6 @@
 'use client'
-import Form from '@/components/Form/Form'
+import FormSignIn from '@/components/FormSignIn/FormSignIn'
 
 export default function Home() {
-  return (
-    <Form title="Faça seu Login" buttonText="Login" spanText="Registre-se" />
-  )
+  return <FormSignIn />
 }

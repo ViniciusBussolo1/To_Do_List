@@ -13,10 +13,10 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <AuthContextProvider>
-      <html lang="en">
-        <body className={roboto.className}>{children}</body>
-      </html>
-    </AuthContextProvider>
+    <html lang="en">
+      <body className={roboto.className}>
+        <AuthContextProvider>{children}</AuthContextProvider>
+      </body>
+    </html>
   )
 }

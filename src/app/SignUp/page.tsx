@@ -1,7 +1,7 @@
-import Form from '@/components/Form/Form'
+'use client'
+
+import FormSignUp from '@/components/FormSignUp/FormSignUp'
 
 export default function SignUp() {
-  return (
-    <Form title="Crie sua Conta" buttonText="Cadastrar" handleFunctionAuth={} />
-  )
+  return <FormSignUp />
 }
