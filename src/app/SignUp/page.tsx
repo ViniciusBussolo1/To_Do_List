@@ -1,3 +1,7 @@
+import Form from '@/components/Form/Form'
+
 export default function SignUp() {
-  return <h1>SignUp</h1>
+  return (
+    <Form title="Crie sua Conta" buttonText="Cadastrar" handleFunctionAuth={} />
+  )
 }
