@@ -13,15 +13,15 @@ import 'react-toastify/dist/ReactToastify.css'
 export default function FormSignUp() {
   const [passwordVisiblity, setPasswordVisiblity] = useState(false)
 
-  const { handleSignUp, handleSubmit, register, errors, isDirty, isValid } =
+  const { handleSignUp, handleSubmit, register, errors, isValid } =
     useFormSignUp()
 
   return (
-    <div className="w-screen h-screen flex justify-center items-center bg-[#121214]">
+    <div className="w-screen h-screen flex justify-center items-center bg-black-800">
       <ToastContainer />
       <form
         onSubmit={handleSubmit(handleSignUp)}
-        className="w-[400px] flex flex-col items-center justify-center gap-8 bg-[#202024] px-6 py-2  rounded"
+        className="w-[400px] flex flex-col items-center justify-center gap-8 bg-black-700 px-6 py-2  rounded"
       >
         <h1 className="font-bold text-white text-2xl">Inscreva-se</h1>
 
@@ -29,7 +29,7 @@ export default function FormSignUp() {
           <input
             type="text"
             placeholder="Usuário"
-            className="bg-[#121214] px-2 py-2 rounded text-white"
+            className="bg-black-800 px-2 py-2 rounded text-white"
             {...register('userName')}
           />
           {errors.userName && (
@@ -40,7 +40,7 @@ export default function FormSignUp() {
           <input
             type="text"
             placeholder="E-mail"
-            className="bg-[#121214] px-2 py-2 rounded text-white"
+            className="bg-black-800 px-2 py-2 rounded text-white"
             {...register('email')}
           />
           {errors.email && (
@@ -49,11 +49,11 @@ export default function FormSignUp() {
             </span>
           )}
 
-          <div className="w-full flex items-center bg-[#121214] px-2 py-2 rounded focus-within:outline focus-within:outline-[2px] focus-within:outline-white">
+          <div className="w-full flex items-center bg-black-800 px-2 py-2 rounded focus-within:outline focus-within:outline-[2px] focus-within:outline-white">
             <input
               type={passwordVisiblity ? 'text' : 'password'}
               placeholder="Senha"
-              className="w-full bg-[#121214] rounded text-white flex-1 outline-none"
+              className="w-full bg-black-800 rounded text-white flex-1 outline-none"
               {...register('password')}
             />
             {passwordVisiblity ? (

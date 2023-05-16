@@ -17,11 +17,11 @@ export default function FormSignIn() {
     useFormSignIn()
 
   return (
-    <div className="w-screen h-screen flex justify-center items-center bg-[#121214]">
+    <div className="w-screen h-screen flex justify-center items-center bg-black-800">
       <ToastContainer />
       <form
         onSubmit={handleSubmit(handleSignIn)}
-        className="w-[400px] h-96 flex flex-col items-center justify-center gap-8 bg-[#202024] px-6 py-2  rounded"
+        className="w-[400px] h-96 flex flex-col items-center justify-center gap-8 bg-black-700 px-6 py-2  rounded"
       >
         <h1 className="font-bold text-white text-2xl">Faça seu Login</h1>
 
@@ -29,7 +29,7 @@ export default function FormSignIn() {
           <input
             type={'text'}
             placeholder="E-mail"
-            className="bg-[#121214] px-2 py-2 rounded text-white"
+            className="bg-black-800 px-2 py-2 rounded text-white"
             {...register('email')}
           />
           {errors.email && (
@@ -38,11 +38,11 @@ export default function FormSignIn() {
             </span>
           )}
 
-          <div className="w-full flex items-center bg-[#121214] px-2 py-2 rounded focus-within:outline focus-within:outline-[2px] focus-within:outline-white">
+          <div className="w-full flex items-center bg-black-800 px-2 py-2 rounded focus-within:outline focus-within:outline-[2px] focus-within:outline-white">
             <input
               type={passwordVisiblity ? 'text' : 'password'}
               placeholder="Senha"
-              className="w-full bg-[#121214] rounded text-white flex-1 outline-none"
+              className="w-full bg-black-800 rounded text-white flex-1 outline-none"
               {...register('password')}
             />
             {passwordVisiblity ? (
