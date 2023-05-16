@@ -14,7 +14,7 @@ interface headerProps {
 export default function Header({ asideOpen, setAsideOpen }: headerProps) {
   const [isShown, setIsShown] = useState(false)
   return (
-    <header className="bg-black-700 px-6 py-6 flex items-center justify-between drop-shadow-lg">
+    <header className="bg-black-700 px-6 py-6 flex items-center justify-between drop-shadow-lg grid-in-header">
       <div
         className="flex items-center gap-2 cursor-pointer"
         onMouseEnter={() => setIsShown(true)}

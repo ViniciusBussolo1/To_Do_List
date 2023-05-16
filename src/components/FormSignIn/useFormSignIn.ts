@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { schemaForm } from './schema'
-import { FormProps } from '@/@types/typeForm'
+import { FormProps } from './type'
 import { useRouter } from 'next/navigation'
 import { toast } from 'react-toastify'
 

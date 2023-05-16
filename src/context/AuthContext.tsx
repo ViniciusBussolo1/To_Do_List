@@ -1,10 +1,9 @@
 'use client'
 
 import supabase from '@/services/supabase'
-import { ReactNode, createContext, useState } from 'react'
+import { ReactNode, createContext } from 'react'
 
 interface AuthContextDataProps {
-  dataUser: Object
   handleAddProfile: (data: Object, userName: string) => void
 }
 
@@ -15,8 +14,6 @@ interface AuthContextProvidersProps {
 export const AuthContext = createContext({} as AuthContextDataProps)
 
 export function AuthContextProvider({ children }: AuthContextProvidersProps) {
-  const [dataUser, setDataUser] = useState({})
-
   const handleAddProfile = async (data: any, userName: string) => {
     const { error } = await supabase
       .from('Profile')
@@ -30,7 +27,6 @@ export function AuthContextProvider({ children }: AuthContextProvidersProps) {
   return (
     <AuthContext.Provider
       value={{
-        dataUser,
         handleAddProfile,
       }}
     >

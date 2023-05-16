@@ -30,6 +30,7 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
+    "@savvywombat/tailwindcss-grid-areas": "^3.0.1",
     "encoding": "^0.1.13"
   }
 }
