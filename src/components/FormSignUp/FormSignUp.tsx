@@ -21,7 +21,7 @@ export default function FormSignUp() {
       <ToastContainer />
       <form
         onSubmit={handleSubmit(handleSignUp)}
-        className="w-[400px] flex flex-col items-center justify-center gap-8 bg-black-700 px-6 py-2  rounded"
+        className="w-[400px] flex flex-col items-center justify-center gap-8 bg-black-700 px-6 py-6  rounded"
       >
         <h1 className="font-bold text-white text-2xl">Inscreva-se</h1>
 

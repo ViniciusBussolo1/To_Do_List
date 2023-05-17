@@ -1,7 +1,16 @@
 'use client'
 
+import { ReactNode, createContext, useState } from 'react'
+
 import supabase from '@/services/supabase'
-import { ReactNode, createContext } from 'react'
+
+interface DataProfileProps {
+  user: {
+    id: string
+    created_at: string
+    user_name: string
+  }[]
+}
 
 interface AuthContextDataProps {
   handleAddProfile: (data: Object, userName: string) => void
@@ -14,10 +23,13 @@ interface AuthContextProvidersProps {
 export const AuthContext = createContext({} as AuthContextDataProps)
 
 export function AuthContextProvider({ children }: AuthContextProvidersProps) {
-  const handleAddProfile = async (data: any, userName: string) => {
-    const { error } = await supabase
+  const [useData, setUserData] = useState()
+
+  const handleAddProfile = async (dataProps: any, userName: string) => {
+    const { data, error } = await supabase
       .from('Profile')
-      .insert({ id: data.user.id, user_name: userName })
+      .insert({ id: dataProps.user.id, user_name: userName })
+      .select()
 
     if (error) {
       console.log(error)
