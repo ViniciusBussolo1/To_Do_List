@@ -1,8 +1,8 @@
 import { ReactNode } from 'react'
 import { Roboto } from 'next/font/google'
-import { AuthContextProvider } from '@/context/AuthContext'
 
 import './globals.css'
+import { HandleCollectionsContextProvider } from '@/context/handleCollectionsContext'
 
 const roboto = Roboto({ weight: ['400', '700'], subsets: ['latin'] })
 
@@ -15,7 +15,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body className={roboto.className}>
-        <AuthContextProvider>{children}</AuthContextProvider>
+        <HandleCollectionsContextProvider>
+          {children}
+        </HandleCollectionsContextProvider>
       </body>
     </html>
   )

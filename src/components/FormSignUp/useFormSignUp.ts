@@ -2,16 +2,12 @@ import { FormProps } from './type'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { schemaForm } from './schema'
-import { useContext } from 'react'
-import { AuthContext } from '@/context/AuthContext'
 
 import { toast } from 'react-toastify'
 
 import supabase from '@/services/supabase'
 
 export const useFormSignUp = () => {
-  const { handleAddProfile } = useContext(AuthContext)
-
   const {
     handleSubmit,
     register,
@@ -25,6 +21,17 @@ export const useFormSignUp = () => {
       password: '',
     },
   })
+
+  const handleAddProfile = async (dataProps: any, userName: string) => {
+    const { error } = await supabase
+      .from('Profile')
+      .insert({ id: dataProps.user.id, user_name: userName })
+      .select()
+
+    if (error) {
+      console.log(error)
+    }
+  }
 
   const handleSignUp = async (props: FormProps) => {
     const email = props.email

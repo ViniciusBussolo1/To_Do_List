@@ -31,6 +31,7 @@
   },
   "devDependencies": {
     "@savvywombat/tailwindcss-grid-areas": "^3.0.1",
-    "encoding": "^0.1.13"
+    "encoding": "^0.1.13",
+    "supabase": "^1.62.4"
   }
 }

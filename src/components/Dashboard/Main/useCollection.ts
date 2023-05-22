@@ -29,10 +29,9 @@ export const useCollection = () => {
     const collection = props.collection
     const userId = user?.id
 
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from('Collections')
       .insert([{ name_collection: collection, profile_id: userId }])
-      .select()
 
     if (error) {
       console.log(error)
