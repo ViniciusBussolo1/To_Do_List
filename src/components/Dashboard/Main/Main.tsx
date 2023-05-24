@@ -1,24 +1,14 @@
 'use client'
 
-import { useContext, useEffect } from 'react'
 import { ToastContainer } from 'react-toastify'
 
 import { useCollection } from './useCollection'
 
 import 'react-toastify/dist/ReactToastify.css'
-import { handleCollectionsContext } from '@/context/handleCollectionsContext'
 
 export default function Main() {
   const { register, handleAddCollection, handleSubmit, errors } =
     useCollection()
-
-  const { handleGetCollections, collections } = useContext(
-    handleCollectionsContext,
-  )
-
-  useEffect(() => {
-    handleGetCollections()
-  }, [])
 
   return (
     <div className="w-full h-full grid-in-main flex justify-center items-center">
