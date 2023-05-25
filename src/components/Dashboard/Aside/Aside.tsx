@@ -34,7 +34,7 @@ export default function Aside({ asideOpen }: asideProps) {
       } duration-700 grid-in-nav`}
     >
       <h2
-        className={`text-gray-300 text-xl origin-left ml-5 ${
+        className={`text-white text-xl origin-left ml-5 ${
           asideOpen && 'scale-0'
         } duration-500`}
       >
@@ -51,7 +51,7 @@ export default function Aside({ asideOpen }: asideProps) {
               return (
                 <li
                   key={item.id}
-                  className={`text-gray-300 px-10 py-5 cursor-pointer hover:bg-black-600 ${
+                  className={`text-white px-10 py-5 cursor-pointer hover:bg-black-600 ${
                     asideOpen && 'scale-0'
                   } duration-500`}
                 >
