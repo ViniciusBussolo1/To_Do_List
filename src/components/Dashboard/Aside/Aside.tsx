@@ -1,14 +1,18 @@
 'use client'
 
 import { useQuery } from 'react-query'
+import { useRouter } from 'next/navigation'
 
 import supabase from '@/services/supabase'
+import Link from 'next/link'
 
 interface asideProps {
   asideOpen: boolean
 }
 
 export default function Aside({ asideOpen }: asideProps) {
+  const router = useRouter()
+
   const getCollections = async () => {
     const {
       data: { user },
@@ -46,17 +50,18 @@ export default function Aside({ asideOpen }: asideProps) {
             Voce ainda não possui nenhuma coleção
           </span>
         ) : (
-          <ul className="">
+          <ul className="flex flex-col">
             {data?.map((item) => {
               return (
-                <li
+                <Link
+                  href={`Dashboard/${item.name_collection}`}
                   key={item.id}
                   className={`text-white px-10 py-5 cursor-pointer hover:bg-black-600 ${
                     asideOpen && 'scale-0'
                   } duration-500`}
                 >
                   {item.name_collection}
-                </li>
+                </Link>
               )
             })}
           </ul>

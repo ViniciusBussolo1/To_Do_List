@@ -8,11 +8,11 @@ import { toast } from 'react-toastify'
 
 import supabase from '@/services/supabase'
 
-export const useCollection = () => {
+export const useMain = () => {
   const {
     handleSubmit,
     register,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm<MainProps>({
     mode: 'onChange',
     resolver: zodResolver(schemaMain),
@@ -29,7 +29,7 @@ export const useCollection = () => {
     const collection = props.collection
     const userId = user?.id
 
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from('Collections')
       .insert([{ name_collection: collection, profile_id: userId! }])
 
@@ -62,7 +62,6 @@ export const useCollection = () => {
   return {
     register,
     errors,
-    isValid,
     handleSubmit,
     handleAddCollection,
   }
