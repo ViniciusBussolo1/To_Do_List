@@ -1,7 +1,6 @@
 'use client'
 
 import { useQuery } from 'react-query'
-import { useRouter } from 'next/navigation'
 
 import supabase from '@/services/supabase'
 import Link from 'next/link'
@@ -11,8 +10,6 @@ interface asideProps {
 }
 
 export default function Aside({ asideOpen }: asideProps) {
-  const router = useRouter()
-
   const getCollections = async () => {
     const {
       data: { user },

@@ -7,6 +7,9 @@ import {
 import { useTasks } from './useTasks'
 import supabase from '@/services/supabase'
 import { useQuery } from 'react-query'
+import { ToastContainer } from 'react-toastify'
+
+import 'react-toastify/dist/ReactToastify.css'
 
 interface RouterProps {
   params: {
@@ -15,7 +18,9 @@ interface RouterProps {
 }
 
 export default function Tasks({ params }: RouterProps) {
-  const { errors, handleAddTask, handleSubmit, register } = useTasks()
+  const { errors, handleAddTask, handleSubmit, register } = useTasks(
+    params.name,
+  )
 
   const getTasks = async () => {
     const {
@@ -45,6 +50,7 @@ export default function Tasks({ params }: RouterProps) {
 
   return (
     <div className="w-[50%] h-screen py-10 flex flex-col gap-11">
+      <ToastContainer />
       <div className="w-full flex justify-between items-center">
         <div className="flex items-center gap-3">
           <div className="text-white ">
@@ -64,7 +70,10 @@ export default function Tasks({ params }: RouterProps) {
         </span>
       </div>
       <div className="w-full">
-        <form onSubmit={handleSubmit(handleAddTask)}>
+        <form
+          onSubmit={handleSubmit(handleAddTask)}
+          className="flex flex-col gap-2"
+        >
           <div className="w-full flex items-center gap-3 bg-black-800 px-2 py-3 rounded-xl focus-within:outline focus-within:outline-[2px] focus-within:outline-gray-600">
             <PlusSmallIcon
               width={24}
@@ -77,12 +86,10 @@ export default function Tasks({ params }: RouterProps) {
               className="bg-black-800 w-full outline-none text-white"
               {...register('task')}
             />
-            {errors.task && (
-              <span className="text-sm text-red-500">
-                {errors.task?.message}
-              </span>
-            )}
           </div>
+          {errors.task && (
+            <span className="text-sm text-red-500">{errors.task?.message}</span>
+          )}
         </form>
       </div>
       <div className="flex flex-col gap-4">

@@ -2,16 +2,16 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import { TasksProps } from './typeTasks'
-import { MainProps } from '../typeMain'
 import { schemaTasks } from './shema'
 
 import supabase from '@/services/supabase'
 
-export const useTasks = () => {
+export const useTasks = (nameCollection: string) => {
   const {
     handleSubmit,
     register,
     formState: { errors },
+    reset,
   } = useForm<TasksProps>({
     mode: 'onChange',
     resolver: zodResolver(schemaTasks),
@@ -28,18 +28,25 @@ export const useTasks = () => {
     const task = props.task
     const userId = user?.id
 
-    const { data: Tasks } = await supabase
+    const { data: Collections } = await supabase
       .from('Collections')
-      .select('id')
+      .select()
       .eq('profile_id', userId)
+      .eq('name_collection', nameCollection)
 
-    const { error } = await supabase
-      .from('Tasks')
-      .insert([{ name_task: task, is_completed: false }])
+    const taskId = Collections?.find((item) => item.profile_id === userId)
+
+    const { error } = await supabase.from('Tasks').insert([
+      {
+        name_task: task,
+        is_completed: false,
+        id_collection: taskId!.id,
+      },
+    ])
 
     if (error) {
       console.log(error)
-      toast.error('Erro ao criar a coleção.', {
+      toast.error('Erro ao criar a tarefa.', {
         position: 'top-right',
         autoClose: 3000,
         hideProgressBar: false,
@@ -50,7 +57,7 @@ export const useTasks = () => {
         theme: 'dark',
       })
     } else {
-      toast.success('Coleção criada com sucesso.', {
+      toast.success('Tarefa criada com sucesso.', {
         position: 'top-right',
         autoClose: 3000,
         hideProgressBar: false,
@@ -61,6 +68,8 @@ export const useTasks = () => {
         theme: 'dark',
       })
     }
+
+    reset()
   }
 
   return {
