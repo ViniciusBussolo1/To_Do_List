@@ -1,13 +1,20 @@
 'use client'
+
+import { useTasks } from './useTasks'
+import { useQuery } from 'react-query'
+import { useState } from 'react'
+import { Task, Task } from '@/services/types/types'
+import { ToastContainer } from 'react-toastify'
+import { CheckIcon } from '@radix-ui/react-icons'
+
 import {
   ChevronLeftIcon,
   EllipsisHorizontalIcon,
   PlusSmallIcon,
 } from '@heroicons/react/24/outline'
-import { useTasks } from './useTasks'
+import * as Checkbox from '@radix-ui/react-checkbox'
+
 import supabase from '@/services/supabase'
-import { useQuery } from 'react-query'
-import { ToastContainer } from 'react-toastify'
 
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -18,6 +25,12 @@ interface RouterProps {
 }
 
 export default function Tasks({ params }: RouterProps) {
+  const [tasksIsCompleted, setTaskIsCompleted] = useState<Array<Task> | null>(
+    [],
+  )
+  const [tasksIsNotCompleted, setTaskIsNotCompleted] =
+    useState<Array<Task> | null>([])
+
   const { errors, handleAddTask, handleSubmit, register } = useTasks(
     params.name,
   )
@@ -35,18 +48,42 @@ export default function Tasks({ params }: RouterProps) {
 
     const task = Tasks?.find((item) => item.name_collection === params.name)
 
-    const { data } = await supabase
+    const { data: TaskIsNotCompleted } = await supabase
       .from('Tasks')
       .select()
       .eq('id_collection', task?.id)
+      .eq('is_completed', false)
 
-    return data
+    const { data: TaskIsCompleted } = await supabase
+      .from('Tasks')
+      .select()
+      .eq('id_collection', task?.id)
+      .eq('is_completed', true)
+
+    setTaskIsNotCompleted(TaskIsNotCompleted)
+    setTaskIsCompleted(TaskIsCompleted)
   }
 
-  const { data } = useQuery({
+  const { data, refetch } = useQuery({
     queryKey: ['tasks'],
     queryFn: getTasks,
   })
+
+  const handleIsCompleted = async (id: string) => {
+    const { data, error } = await supabase
+      .from('Tasks')
+      .update({ is_completed: true })
+      .eq('id', id)
+      .select()
+
+    if (error) {
+      console.log(error)
+    }
+
+    setTaskIsCompleted(data)
+
+    refetch()
+  }
 
   return (
     <div className="w-[50%] h-screen py-10 flex flex-col gap-11">
@@ -94,18 +131,57 @@ export default function Tasks({ params }: RouterProps) {
       </div>
       <div className="flex flex-col gap-4">
         <div>
-          <span className="text-white">Tarefas - {data?.length}</span>
+          <span className="text-white">
+            Tarefas - {tasksIsNotCompleted?.length}
+          </span>
         </div>
         <div className="w-full flex flex-col gap-4">
-          {data?.map((item) => (
-            <div
-              key={item.id}
-              className="bg-black-600 flex items-center justify-start gap-4 rounded-xl px-4 py-4 "
-            >
-              <span className="text-white">0</span>
-              <span className="text-white text-base">{item.name_task}</span>
-            </div>
-          ))}
+          {tasksIsNotCompleted?.map((item) =>
+            item.is_completed === false ? (
+              <div
+                key={item.id}
+                className="bg-black-600 flex items-center justify-start gap-4 rounded-xl px-4 py-4 "
+              >
+                <Checkbox.Root
+                  className="bg-black-800 w-6 h-6 rounded flex justify-center items-center"
+                  onClick={() => handleIsCompleted(item.id)}
+                >
+                  <Checkbox.Indicator className="flex justify-center items-center">
+                    <CheckIcon className="text-orange-600" />
+                  </Checkbox.Indicator>
+                </Checkbox.Root>
+                <span className="text-white text-base">{item.name_task}</span>
+              </div>
+            ) : (
+              <div key={item.id}></div>
+            ),
+          )}
+        </div>
+      </div>
+      <div className="w-full flex flex-col gap-4">
+        <div>
+          <span className="text-white">
+            Completadas - {tasksIsCompleted?.length}
+          </span>
+        </div>
+        <div className="w-full flex flex-col gap-4">
+          {tasksIsCompleted?.map((item) =>
+            item.is_completed === true ? (
+              <div
+                key={item.id}
+                className="bg-black-600 flex items-center justify-start gap-4 rounded-xl px-4 py-4 "
+              >
+                <Checkbox.Root className="bg-black-800 w-6 h-6 rounded flex justify-center items-center">
+                  <Checkbox.Indicator className="flex justify-center items-center">
+                    <CheckIcon className="text-orange-600" />
+                  </Checkbox.Indicator>
+                </Checkbox.Root>
+                <span className="text-white text-base">{item.name_task}</span>
+              </div>
+            ) : (
+              <div key={item.id}></div>
+            ),
+          )}
         </div>
       </div>
     </div>
