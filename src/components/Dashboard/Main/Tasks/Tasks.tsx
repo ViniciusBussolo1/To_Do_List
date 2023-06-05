@@ -3,8 +3,8 @@
 import { useTasks } from './useTasks'
 import { useQuery } from 'react-query'
 import { useState } from 'react'
-import { Task, Task } from '@/services/types/types'
-import { ToastContainer } from 'react-toastify'
+import { Task } from '@/services/types/types'
+import { ToastContainer, toast } from 'react-toastify'
 import { CheckIcon } from '@radix-ui/react-icons'
 
 import {
@@ -13,10 +13,12 @@ import {
   PlusSmallIcon,
 } from '@heroicons/react/24/outline'
 import * as Checkbox from '@radix-ui/react-checkbox'
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 
 import supabase from '@/services/supabase'
 
 import 'react-toastify/dist/ReactToastify.css'
+import { useRouter } from 'next/navigation'
 
 interface RouterProps {
   params: {
@@ -25,6 +27,8 @@ interface RouterProps {
 }
 
 export default function Tasks({ params }: RouterProps) {
+  const router = useRouter()
+
   const [tasksIsCompleted, setTaskIsCompleted] = useState<Array<Task> | null>(
     [],
   )
@@ -62,6 +66,8 @@ export default function Tasks({ params }: RouterProps) {
 
     setTaskIsNotCompleted(TaskIsNotCompleted)
     setTaskIsCompleted(TaskIsCompleted)
+
+    return task
   }
 
   const { data, refetch } = useQuery({
@@ -85,6 +91,41 @@ export default function Tasks({ params }: RouterProps) {
     refetch()
   }
 
+  const collectioId = data?.id
+
+  const handleRemoveCollection = async () => {
+    const { data, error } = await supabase
+      .from('Collections')
+      .delete()
+      .eq('id', collectioId)
+
+    if (error) {
+      console.log(error)
+      toast.error('Erro ao excluir a coleção.', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'dark',
+      })
+    } else {
+      toast.success('Coleção excluida com sucesso.', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'dark',
+      })
+      router.push('/Dashboard')
+    }
+  }
+
   return (
     <div className="w-[50%] h-screen py-10 flex flex-col gap-11">
       <ToastContainer />
@@ -99,11 +140,25 @@ export default function Tasks({ params }: RouterProps) {
           <h1 className="text-white text-2xl">{params.name}</h1>
         </div>
         <span className="text-white">
-          <EllipsisHorizontalIcon
-            width={24}
-            height={24}
-            className="cursor-pointer"
-          />
+          <DropdownMenu.Root>
+            <DropdownMenu.Trigger asChild>
+              <EllipsisHorizontalIcon
+                width={24}
+                height={24}
+                className="cursor-pointer"
+              />
+            </DropdownMenu.Trigger>
+            <DropdownMenu.Portal>
+              <DropdownMenu.Content className="bg-black-600 rounded w-36 p-1">
+                <DropdownMenu.Item
+                  className="text-base text-white px-2 outline-none cursor-pointer hover:bg-black-700"
+                  onClick={handleRemoveCollection}
+                >
+                  Excluir
+                </DropdownMenu.Item>
+              </DropdownMenu.Content>
+            </DropdownMenu.Portal>
+          </DropdownMenu.Root>
         </span>
       </div>
       <div className="w-full">
@@ -140,7 +195,7 @@ export default function Tasks({ params }: RouterProps) {
             item.is_completed === false ? (
               <div
                 key={item.id}
-                className="bg-black-600 flex items-center justify-start gap-4 rounded-xl px-4 py-4 "
+                className="bg-black-600 flex items-center justify-start gap-4 rounded-xl px-4 py-4 cursor-pointer hover:bg-black-400"
               >
                 <Checkbox.Root
                   className="bg-black-800 w-6 h-6 rounded flex justify-center items-center"
@@ -169,14 +224,19 @@ export default function Tasks({ params }: RouterProps) {
             item.is_completed === true ? (
               <div
                 key={item.id}
-                className="bg-black-600 flex items-center justify-start gap-4 rounded-xl px-4 py-4 "
+                className="bg-black-600 flex items-center justify-start gap-4 rounded-xl px-4 py-4 cursor-pointer hover:bg-black-400"
               >
-                <Checkbox.Root className="bg-black-800 w-6 h-6 rounded flex justify-center items-center">
+                <Checkbox.Root
+                  className="bg-black-800 w-6 h-6 rounded flex justify-center items-center"
+                  checked={true}
+                >
                   <Checkbox.Indicator className="flex justify-center items-center">
                     <CheckIcon className="text-orange-600" />
                   </Checkbox.Indicator>
                 </Checkbox.Root>
-                <span className="text-white text-base">{item.name_task}</span>
+                <span className="text-white text-base line-through">
+                  {item.name_task}
+                </span>
               </div>
             ) : (
               <div key={item.id}></div>

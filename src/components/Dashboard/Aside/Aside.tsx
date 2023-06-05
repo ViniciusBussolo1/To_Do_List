@@ -43,7 +43,7 @@ export default function Aside({ asideOpen }: asideProps) {
       </h2>
       <div className="w-full">
         {data?.length === 0 ? (
-          <span className="text-white">
+          <span className="text-white px-5 flex justify-center ">
             Voce ainda não possui nenhuma coleção
           </span>
         ) : (

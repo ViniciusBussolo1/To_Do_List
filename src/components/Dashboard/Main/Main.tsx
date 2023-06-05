@@ -34,10 +34,8 @@ export default function Main() {
       {data?.length === 0 ? (
         <>
           <ToastContainer />
-          <div className="bg-black-400 px-5 py-5 flex flex-col gap-4 items-start rounded">
-            <h3 className="text-white text-lg">
-              Você ainda não tem nenhuma coleção{' '}
-            </h3>
+          <div className="min-w-[20.313rem] bg-black-400 px-5 py-5 flex flex-col gap-4 items-start rounded">
+            <h3 className="text-white text-lg">Adicione uma coleção </h3>
             <form
               onSubmit={handleSubmit(handleAddCollection)}
               className="flex flex-col gap-4 w-full"
