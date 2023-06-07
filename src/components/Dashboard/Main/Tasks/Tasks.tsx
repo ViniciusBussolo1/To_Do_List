@@ -94,7 +94,7 @@ export default function Tasks({ params }: RouterProps) {
   const collectioId = data?.id
 
   const handleRemoveCollection = async () => {
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from('Collections')
       .delete()
       .eq('id', collectioId)

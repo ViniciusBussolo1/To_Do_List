@@ -71,6 +71,7 @@ export interface Database {
       }
     }
     Views: {
+     /* eslint-disable */
       [_ in never]: never
     }
     Functions: {
@@ -82,5 +83,6 @@ export interface Database {
     CompositeTypes: {
       [_ in never]: never
     }
+    /* eslint-enable */
   }
 }
