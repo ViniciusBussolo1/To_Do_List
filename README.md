@@ -1,7 +1,7 @@
 # To_Do_List
 
 ## 💻 Projeto
-Projeto desenvolvido para gerenciar tarefas
+Projeto desenvolvido para gerenciar tarefas.
 
 ## ✨ Tecnologias
 
@@ -15,7 +15,7 @@ Projeto desenvolvido para gerenciar tarefas
 Clone o projeto e acesse a pasta do mesmo.
 
 ```bash
-$ git clone [https://github.com/ViniciusBussolo1/Bora_Codar_Desafio_18.git](https://github.com/ViniciusBussolo1/To_Do_List.git)
+$ git clone [https://github.com/ViniciusBussolo1/To_Do_List.git]
 $ cd To_Do_List
 ```
 
