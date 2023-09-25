@@ -56,6 +56,7 @@ export const useMain = () => {
         progress: undefined,
         theme: 'dark',
       })
+      window.location.reload()
     }
   }
 

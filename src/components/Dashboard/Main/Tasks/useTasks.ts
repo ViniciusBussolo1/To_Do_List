@@ -67,6 +67,7 @@ export const useTasks = (nameCollection: string) => {
         progress: undefined,
         theme: 'dark',
       })
+      window.location.reload()
     }
 
     reset()
