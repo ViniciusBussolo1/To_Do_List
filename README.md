@@ -9,6 +9,8 @@ Projeto desenvolvido para gerenciar tarefas.
 - [Supabase](https://supabase.com/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
+- [React-Query](https://tanstack.com/query/latest/docs/framework/react/overview)
+- [Zod](https://zod.dev/)
 
 ## 🚀 Como executar
 
